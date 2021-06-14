@@ -1,0 +1,4 @@
+pyYAML
+web3
+gql==3.0.0a6
+python-pushover

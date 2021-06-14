@@ -1,0 +1,161 @@
+# where to store the logs
+logging:
+  filename: './uniwatcher.log'
+  debug: false
+
+# where all the token information is stored (name, liquidity, age, etc.)
+storage:
+  filename: './state.json'
+
+ethereum:
+  # Ethereum provider (you can use Infura)
+  url: 'wss://mainnet.infura.io/ws/v3/<PROJECT_ID>'
+  timeout: 60
+
+  # Uniswap factory contract address (v2)
+  address: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+
+  abi:
+    - anonymous: false
+      inputs:
+        - indexed: true
+          internalType: address
+          name: token0
+          type: address
+        - indexed: true
+          internalType: address
+          name: token1
+          type: address
+        - indexed: false
+          internalType: address
+          name: pair
+          type: address
+        - indexed: false
+          internalType: uint256
+          name: ''
+          type: uint256
+      name: PairCreated
+      type: event
+    - constant: true
+      inputs:
+        - internalType: uint256
+          name: ''
+          type: uint256
+      name: allPairs
+      outputs:
+        - internalType: address
+          name: pair
+          type: address
+      payable: false
+      stateMutability: view
+      type: function
+    - constant: true
+      inputs: []
+      name: allPairsLength
+      outputs:
+        - internalType: uint256
+          name: ''
+          type: uint256
+      payable: false
+      stateMutability: view
+      type: function
+    - constant: false
+      inputs:
+        - internalType: address
+          name: tokenA
+          type: address
+        - internalType: address
+          name: tokenB
+          type: address
+      name: createPair
+      outputs:
+        - internalType: address
+          name: pair
+          type: address
+      payable: false
+      stateMutability: nonpayable
+      type: function
+    - constant: true
+      inputs: []
+      name: feeTo
+      outputs:
+        - internalType: address
+          name: ''
+          type: address
+      payable: false
+      stateMutability: view
+      type: function
+    - constant: true
+      inputs: []
+      name: feeToSetter
+      outputs:
+        - internalType: address
+          name: ''
+          type: address
+      payable: false
+      stateMutability: view
+      type: function
+    - constant: true
+      inputs:
+        - internalType: address
+          name: tokenA
+          type: address
+        - internalType: address
+          name: tokenB
+          type: address
+      name: getPair
+      outputs:
+        - internalType: address
+          name: pair
+          type: address
+      payable: false
+      stateMutability: view
+      type: function
+    - constant: false
+      inputs:
+        - internalType: address
+          name: ''
+          type: address
+      name: setFeeTo
+      outputs: []
+      payable: false
+      stateMutability: nonpayable
+      type: function
+    - constant: false
+      inputs:
+        - internalType: address
+          name: ''
+          type: address
+      name: setFeeToSetter
+      outputs: []
+      payable: false
+      stateMutability: nonpayable
+      type: function
+
+uniswap:
+  # Uniswap Subgraph url
+  url: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
+
+filter:
+  # minimum liquidity before sending notifications ($)
+  liquidity: 150000
+  # how long tokens will be monitored before marked as expired (seconds)
+  age: 604800
+  # tokens with these keywords will trigger instant notifications
+  keywords:
+    - finance
+    #- farm
+    #- yield
+    #- swap
+    #- earn
+
+# notifications are sent via Pushover: https://pushover.net/
+pushover:
+  url: 'https://uniswap.info'
+  # insert your Pushover config here
+  user_key:
+  api_key:
+  device:
+
+# how often the tokens are monitored (seconds)
+timestep: 60
